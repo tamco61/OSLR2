@@ -1,5 +1,6 @@
 #include "unistd.h"
 #include "stdio.h"
+#include <iostream>
 
 int main()
 {
@@ -30,6 +31,7 @@ int main()
 		fflush(stdout);
 		int x = 10;
 		int y = 5;
+		cin >> y;
 		write(fd[1], &x, sizeof(int));
 		write(fd[1], &y, sizeof(int));
 
@@ -41,4 +43,4 @@ int main()
 		close(fd[1]);
 	}
 	return 0;
-}
+}2
