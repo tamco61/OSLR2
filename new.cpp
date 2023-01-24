@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <fstream>
 
+using namespace std;
+
 int main()
 {
 	int fd[2];
@@ -19,7 +21,7 @@ int main()
 
 	
 	int id = fork();
-
+    cout << "1";
 	if (id == -1)
 	{
 		cout << "fork error" << endl;
@@ -27,7 +29,7 @@ int main()
 	else if (id == 0)
 	{
 
-		fflush(stdout);
+		cout << "1";
 		ifstream in(filename);
 		streambuf* cinbuf = cin.rdbuf();
 		cin.rdbuf(in.rdbuf());
@@ -41,7 +43,8 @@ int main()
 			sum += number;
 			if (n % 3 == 0 && n != 0)
 			{
-				write(fd[1], &sum, sizeof(float));
+				//write(fd[1], &sum, sizeof(float));
+				cout << sum;
 				sum = 0;
 			}
 		}
@@ -53,7 +56,7 @@ int main()
 	else 
 	{
 		fflush(stdout);
-		float res
+		float res;
 
 		while (read(fd[0], &res, sizeof(float)))
 		{
