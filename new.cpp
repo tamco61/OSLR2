@@ -18,7 +18,7 @@ int main()
 
 	char* filename;
 	cin >> filename;
-	int file = open(filename, O_RDWR | O_CREAT, 0777)
+	int file = open(filename, O_RDWR | O_CREAT, 0777);
 	
 	int id = fork();
 	if (id == -1)
