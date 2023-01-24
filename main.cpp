@@ -10,9 +10,9 @@ int main()
     char* c;
     cin >> c;
     cout << c;
+
     const char* s = c;
-    
-    ifstream file;
+   	
     
     
     
