@@ -1,33 +1,36 @@
-#include "unistd.h"
-#include "stdio.h"
 #include <iostream>
-#include <fstream>
 #include <fcntl.h>
-
-using namespace std;
+#include <unistd.h>
+#include <fstream>
 
 int main()
 {
 	int fd[2];
-	pipe(fd);
+
+	if (pipe(fd) == -1)
+	{
+		cout << "pipe error" << endl;
+
+		return -1;
+	}
+
 	char* filename;
 	cin >> filename;
 
-	int file = open(filename, O_RDWR | O_CREAT, 0777);
-
+	
 	int id = fork();
 
 	if (id == -1)
 	{
-		perror("fork error");
-		return -1;
+		cout << "fork error" << endl;
 	}
 	else if (id == 0)
 	{
-		printf("[%d] It's child\n", getpid());
-		fflush(stdout);
 
-		
+		fflush(stdout);
+		ifstream in(filename);
+		streambuf* cinbuf = cin.rdbuf();
+		cin.rdbuf(in.rdbuf());
 		float number;
 		float sum = 0;
 		int n = 0;
@@ -44,18 +47,12 @@ int main()
 		}
 		close(fd[0]);
 		close(fd[1]);
-
-	}
-	else
-	{
-
-		printf("[%d] It's parent. Child id: %d\n", getpid(), id);
+		cin.rdbuf(cinbuf);
 		fflush(stdout);
-		
-		ifstream in("in.txt");
-		streambuf* cinbuf = cin.rdbuf();
-		cin.rdbuf(in.rdbuf());
-
+	}
+	else 
+	{
+		fflush(stdout);
 		float res
 
 		while (read(fd[0], &res, sizeof(float)))
@@ -64,9 +61,12 @@ int main()
 		}
 
 		fflush(stdout);
-		close(fd[0]);
-		close(fd[1]);
-		cin.rdbuf(cinbuf);
 	}
+
+
+
+
 	return 0;
+
+
 }
