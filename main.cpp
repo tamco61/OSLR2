@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <fstream>
 #include <string>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 using namespace std;
 
@@ -22,8 +24,8 @@ int main()
 	}
 
 	// создание процесса
-	int id = fork();
-
+	pid_t id = fork();
+	cout << "forked" << endl;
 	if (id == -1)
 	{
 		cout << "fork error" << endl;
@@ -33,7 +35,6 @@ int main()
 	// дочерний процесс
 	else if (id == 0)
 	{
-		fflush(stdout);
 		ifstream file(filename.c_str());
 		streambuf* cinbuf = cin.rdbuf();
 		cin.rdbuf(file.rdbuf());
@@ -56,26 +57,26 @@ int main()
 			}
 		}
 
+		write(fd[1], &sum, sizeof(sum));
 		close(fd[0]);
 		close(fd[1]);
 		cin.rdbuf(cinbuf);
-		fflush(stdout);
 	}
 	// родительский процесс
 	else
 	{
 		float res;
 
-		while (read(fd[0], &res, sizeof(float)))
+		while (read(fd[0], &res, sizeof(res)))
 		{
+			if (res == 0) break;
 			cout << res << endl;
 		}
 
 		close(fd[0]);
 		close(fd[1]);
-		fflush(stdout);
 	}
 
 
 	return 0;
-}
+}	
