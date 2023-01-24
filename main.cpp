@@ -1,15 +1,20 @@
+#include <string>
 #include <iostream>
-#include <fcntl.h>
-#include <unistd.h>
+#include <fstream>
 
 using namespace std;
 
-int main() 
+int main()
 {
-    char* filename;
-    cin >> filename;
-    int file = open(filename, O_RDONLY);
-    cout << file << endl;
+    
+    char* c;
+    cin >> c;
+    cout << c;
+    const char* s = c;
+    
+    ifstream file;
+    
+    
     
     return 0;
 }
