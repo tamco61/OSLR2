@@ -67,7 +67,7 @@ int main()
 	{
 		float res;
 
-		while (read(fd[0], &res, sizeof(res)))
+		while ((read(fd[0], &res, sizeof(res))) && (res != 0))
 		{
 		    if (res == 0) break;
 			cout.width(10);
