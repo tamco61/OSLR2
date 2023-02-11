@@ -65,6 +65,7 @@ int main()
         write(fd[1], &sum, sizeof(sum));
         close(fd[0]);
         close(fd[1]);
+        file.close();
         cin.rdbuf(cinbuf);
         cout << "child process done" << endl;
     }
