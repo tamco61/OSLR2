@@ -67,16 +67,17 @@ int main()
 	{
 		float res;
 
-		while ((read(fd[0], &res, sizeof(res))) && (res != 0))
+		while ((read(fd[0], &res, sizeof(res))))
 		{
-		    if (res == 0) break;
+		    if (res == 0) 
+		    {
+		    	close(fd[0]);
+		    	close(fd[1]);
+		    }
 			cout.width(10);
 			cout.precision(8);
 			cout << res << endl;
 		}
-
-		close(fd[0]);
-		close(fd[1]);
 	}
 
 
