@@ -69,15 +69,14 @@ int main()
 
 		while ((read(fd[0], &res, sizeof(res))))
 		{
-		    if (res == 0) 
-		    {
-		    	close(fd[0]);
-		    	close(fd[1]);
-		    }
+		    if (res == 0) break;
 			cout.width(10);
 			cout.precision(8);
 			cout << res << endl;
 		}
+
+		close(fd[0]);
+		close(fd[1]);
 	}
 
 
