@@ -2,9 +2,6 @@
 #include <unistd.h>
 #include <fstream>
 #include <string>
-#include <sys/wait.h>
-#include <sys/types.h>
-
 using namespace std;
 
 int main()

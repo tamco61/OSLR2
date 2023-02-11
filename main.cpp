@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <stdio.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 
 using namespace std;
@@ -61,11 +63,15 @@ int main()
 		close(fd[0]);
 		close(fd[1]);
 		cin.rdbuf(cinbuf);
+
+		exit(getppid());
 	}
 	// родительский процесс
 	else
 	{
 		float res;
+
+		wait();
 
 		while ((read(fd[0], &res, sizeof(res))))
 		{
