@@ -77,6 +77,7 @@ int main()
 
 		close(fd[0]);
 		close(fd[1]);
+		close(0);
 	}
 
 
