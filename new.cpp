@@ -18,9 +18,10 @@ int main()
 
 	char* filename;
 	cin >> filename;
-	int file = open(filename, O_RDWR | O_CREAT, 0777);
+	int file = open(filename, O_RDWR | O_CREAT, 0777)
 	
 	int id = fork();
+    cout << "1";
 	if (id == -1)
 	{
 		cout << "fork error" << endl;
@@ -28,13 +29,16 @@ int main()
 	else if (id == 0)
 	{
 
+		cout << "1";
+		ifstream in(filename);
+		streambuf* cinbuf = cin.rdbuf();
+		cin.rdbuf(in.rdbuf());
 		float number;
 		float sum = 0;
 		int n = 0;
 
-		while (read(file, &number, sizeof(float)))
+		while (cin >> number)
 		{
-
 			n += 1;
 			sum += number;
 			if (n % 3 == 0 && n != 0)
@@ -46,7 +50,7 @@ int main()
 		}
 		close(fd[0]);
 		close(fd[1]);
-		close(file);
+		cin.rdbuf(cinbuf);
 		fflush(stdout);
 	}
 	else 

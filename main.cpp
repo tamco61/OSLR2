@@ -2,8 +2,8 @@
 #include <unistd.h>
 #include <fstream>
 #include <string>
-#include <sys/wait.h>
-#include <sys/types.h>
+#include <stdio.h>
+
 
 using namespace std;
 
@@ -25,7 +25,6 @@ int main()
 
 	// создание процесса
 	pid_t id = fork();
-	cout << "forked" << endl;
 	if (id == -1)
 	{
 		cout << "fork error" << endl;
@@ -47,7 +46,8 @@ int main()
 		{
 			n += 1;
 			if ((n % 3) == 0)
-			{
+			{  
+			    sum += num;
 				write(fd[1], &sum, sizeof(sum));
 				sum = 0;
 			}
@@ -69,7 +69,9 @@ int main()
 
 		while (read(fd[0], &res, sizeof(res)))
 		{
-			if (res == 0) break;
+		    if (res == 0) break;
+			cout.width(10);
+			cout.precision(8);
 			cout << res << endl;
 		}
 
