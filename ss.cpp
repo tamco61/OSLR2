@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 int main()
@@ -50,6 +51,7 @@ int main()
             n += 1;
             if ((n % 3) == 0)
             {
+                sum += num;
                 write(fd[1], &sum, sizeof(sum));
                 sum = 0;
             }
