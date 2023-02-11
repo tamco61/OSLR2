@@ -71,8 +71,6 @@ int main()
 	{
 		float res;
 
-		wait();
-
 		while ((read(fd[0], &res, sizeof(res))))
 		{
 		    if (res == 0) break;
@@ -83,7 +81,6 @@ int main()
 
 		close(fd[0]);
 		close(fd[1]);
-		close(0);
 	}
 
 
