@@ -63,7 +63,6 @@ int main()
         }
 
         write(fd[1], &sum, sizeof(sum));
-        close(fd[0]);
         close(fd[1]);
         file.close();
         cin.rdbuf(cinbuf);
@@ -72,7 +71,6 @@ int main()
     // родительский процесс
     else
     {
-        cout << "parent wait" << endl;
         cout << "parent started" << endl;
         float res;
 
@@ -83,7 +81,6 @@ int main()
         }
 
         close(fd[0]);
-        close(fd[1]);
         cout << "parent done" << endl;
     }
 
