@@ -33,7 +33,7 @@ int main()
 		dup2(file, 0);
 		dup2(fd[1], 1);
 
-		execl("./slave.out");
+		execl("./slave.out", "");
 
 
 
