@@ -1,55 +1,55 @@
-#include <unistd.h>
 #include <iostream>
+#include <fcntl.h>
 #include <string>
-
+#include <unistd.h>
 
 using namespace std;
 
-int main() 
+int main()
 {
-
+	// file etc
 	string filename;
 	cin >> filename;
 
-	int file = open(filename.c_str());
+	int file_d = open(filename.c_str(), O_RDONLY);
+	if (file_d == -1) return -1;
+
+	// pipe etc
 	int fd[2];
+	if (pipe(fd) == -1) return -2;
 
-	if (pipe(fd) == -1) {
-		cout << "pipe error" << endl;
-		return -1;
-	}
-
+	// fork etc
 	int id = fork();
+	if (id == -1) return -3;
 
-	if (id == -1)
+	// main algo
+	if (id == 0)
 	{
-		cout << "fork error" << endl;
+	
+		if (dup2(file_d, STDIN_FILENO) == -1) return -41;
+		if (dup2(fd[1], STDOUT_FILENO) == -1) return -42;
+		close(fd[0]);
 
-		return -1;
-	}
-	else if (id == 0)
-	{
-
-		dup2(file, 0);
-		dup2(fd[1], 1);
-
-		execl("./slave.out", "");
-
-
+		execl("./slave","./slave", (char *) NULL);
 
 	}
 	else
 	{
+		close(file_d);
 
-		dup2(fd[0], 0);
 		float num;
-		while (cin >> num)
+		while (read(fd[0], &num, sizeof(float)) != sizeof(char))
 		{
+
 			cout << num << endl;
+
 		}
-		close(fd[1]);
-		close(fd[0]);
+
+
 	}
+
+	close(fd[0]);
+	close(fd[1]);
 
 
 	return 0;
